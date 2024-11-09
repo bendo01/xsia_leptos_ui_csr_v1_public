@@ -1,0 +1,34 @@
+[package]
+name = "xsia_leptos_ui_csr_v1"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+console_error_panic_hook = "0.1.7"
+console_log = "1.0.0"
+leptoaster = "0.1.8"
+leptos = { version = "0.6.15", features = ["csr", "nightly"] }
+leptos_meta = { version = "0.6", features = ["csr", "nightly"] }
+leptos_router = { version = "0.6", features = ["csr", "nightly"] }
+log = "0.4"
+thaw = { version = "0.3.4", features = ["csr"] }
+icondata = "=0.4.0"
+leptos_darkmode = "0.2.0"
+
+[dev-dependencies]
+wasm-bindgen = "0.2"
+wasm-bindgen-test = "0.3"
+web-sys = { version = "0.3", features = ["Document", "Window"] }
+
+[profile.release]
+opt-level = 'z'
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[package.metadata.leptos]
+output-name = "xsia_leptos_ui_csr_v1"
+assets-dir = "public"
+# Activates the tailwind build
+tailwind-input-file = "style/app.css"
+tailwind-config-file = "tailwind.config.js"
