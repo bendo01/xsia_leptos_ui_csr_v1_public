@@ -26,10 +26,10 @@ pub fn App() -> impl IntoView {
 
 #[component]
 fn Home() -> impl IntoView {
-    let theme = RwSignal::new(Theme::dark());
+    let theme = RwSignal::new(Theme::light());
     let toaster = expect_toaster();
     let placement = RwSignal::new(DrawerPlacement::Right);
-    let show_menu = RwSignal::new(true);
+    let show_menu = RwSignal::new(false);
     let value = RwSignal::new(String::from("o"));
     let mut dark_mode = expect_context::<Darkmode>();
 
@@ -43,13 +43,12 @@ fn Home() -> impl IntoView {
         })
     });
     // let (_, write_theme, _) = use_local_storage::<String, FromToStringCodec>("theme");
-    let change_theme = {
+    let change_theme = move |_| {
         let mut mode_dark = dark_mode.clone();
         if theme_name.get_untracked() == "Light" {
             theme.set(Theme::light());
             // write_theme.set("light".to_string());
             mode_dark.set_light();
-
         } else {
             theme.set(Theme::dark());
             // write_theme.set("dark".to_string());
@@ -80,11 +79,12 @@ fn Home() -> impl IntoView {
                             <span class="ml-3 text-gray-700 dark:text-gray-300">xSIA</span>
                         </div>
                         <div class="inline-flex items-center">
-                            <Button
+                            <button
                                 on_click=change_theme
+                                class="m-1 ms-0 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-none text-gray-600 dark:text-gray-400 disabled:opacity-50 disabled:pointer-events-none"
                             >
                                 {move || theme_name.get()}
-                            </Button>
+                            </button>
                             <ButtonMenu on_click=move |_| show_menu.set(true) />
                         </div>
                     </div>
